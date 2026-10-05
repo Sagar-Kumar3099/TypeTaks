@@ -1,6 +1,6 @@
-type TaskStatus = "todo" | "in-progress" | "done";
+export type TaskStatus = "todo" | "in-progress" | "done";
 
-interface Task {
+export interface Task {
   id: number;
   title: string;
   status: TaskStatus;
@@ -12,7 +12,7 @@ export function seedNextId(tasks: Task[]): void {
   nextId = tasks.reduce((max, t) => Math.max(max, t.id), 0) + 1;
 }
 // Add a new task — always starts as "todo".
-function addTask(tasks: Task[], title: string): Task[] {
+export function addTask(tasks: Task[], title: string): Task[] {
   const newTask: Task = { id: nextId++, title, status: "todo" };
   return [...tasks, newTask];
 }
@@ -38,6 +38,11 @@ export function deleteTask(tasks: Task[], id: number): Task[] {
 }
 
 // Return only the tasks matching a given status.
-function filterByStatus(tasks: Task[], status: TaskStatus): Task[] {
+export function filterByStatus(tasks: Task[], status: TaskStatus): Task[] {
   return tasks.filter((t) => t.status === status);
+}
+
+// Count tasks in a given status (handy for the header summary).
+export function countByStatus(tasks: Task[], status: TaskStatus): number {
+  return filterByStatus(tasks, status).length;
 }
